@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+uploads/*
+!uploads/.gitkeep
+.mail/
+coverage/
+*.log
+.netlify/
+.env.*
+!.env.example
+backups/
+*.sql.gz
+*.dump

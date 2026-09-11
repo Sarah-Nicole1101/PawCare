@@ -1,0 +1,14 @@
+**
+!package.json
+!package-lock.json
+!client/
+!client/**
+!server/
+!server/**
+!database/
+!database/schema.sql
+!scripts/
+!scripts/migrate.mjs
+!Dockerfile
+**/.env*
+**/node_modules/

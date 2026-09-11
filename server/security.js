@@ -8,15 +8,17 @@ export function checkConfig() {
       throw new Error(
         `${name} is missing. Run npm run setup and preserve the generated keys.`,
       );
-  if (
-    process.env.NODE_ENV === "production" &&
-    (!process.env.APP_ORIGIN?.startsWith("https://") ||
-      process.env.MAIL_MODE !== "smtp" ||
-      !process.env.SMTP_HOST)
-  )
-    throw new Error(
-      "Production requires an HTTPS APP_ORIGIN and configured SMTP.",
-    );
+  if (process.env.NODE_ENV === "production") {
+    const hasHttpsOrigin = process.env.APP_ORIGIN?.startsWith("https://");
+    const hasSmtp =
+      process.env.MAIL_MODE === "smtp" && Boolean(process.env.SMTP_HOST);
+    const hasBrevo =
+      process.env.MAIL_MODE === "brevo" && Boolean(process.env.BREVO_API_KEY);
+    if (!hasHttpsOrigin || (!hasSmtp && !hasBrevo))
+      throw new Error(
+        "Production requires an HTTPS APP_ORIGIN and configured transactional email.",
+      );
+  }
 }
 export const token = () => crypto.randomBytes(32).toString("hex");
 export const digest = (value) =>
